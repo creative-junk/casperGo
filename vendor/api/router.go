@@ -145,6 +145,37 @@ var routes = Routes{
 		"/invoice/email/{id}",
 		controller.SendInvoice,
 	},
+	//Sales Receipts
+	Route{
+		"ListSales",
+		"GET",
+		"/sales",
+		controller.ListSale,
+	},
+	Route{
+		"NewSale",
+		"POST",
+		"/sale/new",
+		controller.AddSale,
+	},
+	Route{
+		"GetSale",
+		"GET",
+		"/sale/{id}",
+		controller.FetchSale,
+	},
+	Route{
+		"UpdateSale",
+		"PUT",
+		"/sale/update/{id}",
+		controller.ModifySale,
+	},
+	Route{
+		"DeleteSale",
+		"DELETE",
+		"/sale/delete/{id}",
+		controller.DeleteSale,
+	},
 	//Payment Routes
 	Route{
 		"ListPayments",

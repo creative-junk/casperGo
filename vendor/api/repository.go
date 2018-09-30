@@ -11,11 +11,12 @@ type Repository struct {
 }
 
 const DB_SERVER = "mongodb://hernandez:gKZa7YS7xn444wfR@ds011820.mlab.com:11820/heroku_mg3t2zhk"
-const DB_NAME = "casper"
+const DB_NAME = "heroku_mg3t2zhk"
 const INVOICE_COLLECTION = "invoice"
 const CUSTOMER_COLLECTION = "customer"
 const ESTIMATE_COLLECTION = "estimate"
 const EXPENSE_COLLECTION = "expense"
+const SALE_COLLECTION = "sale"
 const PAYMENT_COLLECTION = "payment"
 const ITEM_COLLECTION = "item"
 const TAX_COLLECTION = "tax"
@@ -293,6 +294,89 @@ func (r Repository) deleteEstimate(id string) string {
 	}
 	return "OK"
 }
+
+//Get All Sales Receipts
+func (r Repository) getSales() Sales {
+	session, err := mgo.Dial(DB_SERVER)
+
+	if err != nil {
+		fmt.Println("Failed to establish connection to Database: ", err)
+	}
+
+	defer session.Close()
+
+	c := session.DB(DB_NAME).C(SALE_COLLECTION)
+	results := Sales{}
+
+	if err := c.Find(nil).All(&results); err != nil {
+		fmt.Println("Failed to write results:", err)
+	}
+
+	return results
+}
+
+//Add an Invoice
+func (r Repository) addSale(sale Sale) bool {
+	session, err := mgo.Dial(DB_SERVER)
+	defer session.Close()
+
+	session.DB(DB_NAME).C(SALE_COLLECTION).Insert(sale)
+
+	if err != nil {
+		log.Fatal(err)
+		return false
+	}
+
+	fmt.Println("Added a new Sale")
+	return true
+}
+
+//Update a Sale
+func (r Repository) modifySale(sale Sale) bool {
+	session, err := mgo.Dial(DB_SERVER)
+	defer session.Close()
+
+	err = session.DB(DB_NAME).C(SALE_COLLECTION).UpdateId(sale.ID, sale)
+
+	if err != nil {
+		log.Fatal(err)
+		return false
+	}
+	return true
+}
+
+//Fetch a Sale
+func (r Repository) fetchSale(id string) Sale {
+	session, err := mgo.Dial(DB_SERVER)
+
+	if err != nil {
+		fmt.Println("Failed to establish a Database Connection: ", err)
+	}
+
+	defer session.Close()
+
+	c := session.DB(DB_NAME).C(SALE_COLLECTION)
+	var result Sale
+
+	if err := c.FindId(id).One(&result); err != nil {
+		fmt.Println("Failed to write result: ", err)
+	}
+	return result
+}
+
+//Delete a Sales Receipt
+func (r Repository) deleteSale(id string) string {
+	session, err := mgo.Dial(DB_SERVER)
+
+	defer session.Close()
+
+	if err = session.DB(DB_NAME).C(SALE_COLLECTION).RemoveId(id); err != nil {
+		log.Fatal(err)
+		return "INTERNAL ERR"
+	}
+	return "OK"
+}
+
 
 //Get All Expenses
 func (r Repository) getExpenses() Expenses {

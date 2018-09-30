@@ -564,6 +564,125 @@ func (c *Controller) DeleteExpense(w http.ResponseWriter, r *http.Request) {
 
 }
 
+//Invoices /sales GET
+func (c *Controller) ListSale(w http.ResponseWriter, r *http.Request) {
+	sales := c.repository.getSales()
+	data, _ := json.Marshal(sales)
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
+	return
+}
+
+//NewSale POST
+func (c *Controller) AddSale(w http.ResponseWriter, r *http.Request) {
+	var sale Sale
+	//Read the body of the request
+	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+	if err != nil {
+		log.Fatalln("Error Saving Sale: ", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	if err := r.Body.Close(); err != nil {
+		log.Fatalln("Error Creating Sales Receipt")
+	}
+
+	if err := json.Unmarshal(body, &sale); err != nil {
+		w.WriteHeader(422)
+		log.Println(err)
+		if err := json.NewEncoder(w).Encode(err); err != nil {
+			log.Fatalln("Error unmarshalling data", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		success := c.repository.addSale(sale)
+
+		if !success {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+		w.WriteHeader(http.StatusCreated)
+		return
+	}
+}
+
+// UpdateSale PUT
+func (c *Controller) ModifySale(w http.ResponseWriter, r *http.Request) {
+	var sale Sale
+	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576)) // read the body of the request
+	if err != nil {
+		log.Fatalln("Error Updating Sale", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if err := r.Body.Close(); err != nil {
+		log.Fatalln("Error Updating Sale", err)
+	}
+
+	if err := json.Unmarshal(body, &sale); err != nil {
+		// unmarshall body contents as a type Candidate
+		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+		w.WriteHeader(422) // unprocessable entity
+		if err := json.NewEncoder(w).Encode(err); err != nil {
+			log.Fatalln("Error unmarshalling data", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	}
+
+	success := c.repository.modifySale(sale) // updates the product in the DB
+
+	if !success {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.WriteHeader(http.StatusOK)
+	return
+}
+
+//FetchSale GET
+func (c *Controller) FetchSale(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	id := vars["id"]
+
+	sale := c.repository.fetchSale(id)
+	data, _ := json.Marshal(sale)
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
+	return
+}
+
+//Delete a Sales Receipt
+func (c *Controller) DeleteSale(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	if err := c.repository.deleteSale(id); err != "" {
+		if strings.Contains(err, "404") {
+			w.WriteHeader(http.StatusNotFound)
+		} else if strings.Contains(err, "500") {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+		return
+	}
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.WriteHeader(http.StatusOK)
+	return
+
+}
+
 //Items /items GET
 func (c *Controller) ListItem(w http.ResponseWriter, r *http.Request) {
 	items := c.repository.getItems()

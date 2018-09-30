@@ -124,3 +124,4 @@ type Customers []Customer
 type Payments []Payment
 type Taxes []Tax
 type Notifications []Notification
+type Sales []Sale 
