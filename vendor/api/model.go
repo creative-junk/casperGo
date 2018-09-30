@@ -9,10 +9,10 @@ import (
 type Business struct {
 	ID            bson.ObjectId `bson:"_id"`
 	UserId        bson.ObjectId `bson:"user_id"`
-	BusinessName  string        `json:"businessName"`
-	BusinessEmail string        `json:"businessEmail"`
-	PhoneNumber   string        `json:"phoneNumber"`
-	ContactPerson string        `json:"contactPerson"`
+	BusinessName  string        `json:"business_name"`
+	BusinessEmail string        `json:"business_email"`
+	PhoneNumber   string        `json:"phone_number"`
+	ContactPerson string        `json:"contact_person"`
 	Address       string        `json:"address"`
 	City          string        `json:"city"`
 	Country       string        `json:"country"`
@@ -21,14 +21,14 @@ type Business struct {
 type Customer struct {
 	ID           string `bson:"_id"`
 	UserId       string `bson:"user_id"`
-	CustomerName string `json:"customerName"`
-	CompanyName  string `json:"companyName"`
-	MobileNumber string `json:"mobileNumber"`
-	EmailAddress string `json:"emailAddress"`
+	CustomerName string `json:"customer_name"`
+	CompanyName  string `json:"company_name"`
+	MobileNumber string `json:"mobile_number"`
+	EmailAddress string `json:"email_address"`
 	Address      string `json:"address"`
 	City         string `json:"city"`
 	Country      string `json:"country"`
-	PaymentTerms string `json:"paymentTerms"`
+	PaymentTerms string `json:"payment_terms"`
 	Notes        string `json:"notes"`
 }
 type Estimate struct {
@@ -41,7 +41,7 @@ type Estimate struct {
 	CreatedAt          time.Time `json:"created_at"`
 	ExpiresAt          time.Time `json:"expires_at"`
 	Discount           string    `json:"discount"`
-	ShippingFees       uint64    `json:"shippingFees"`
+	ShippingFees       uint64    `json:"shipping_fees"`
 }
 type Invoice struct {
 	ID                 string    `bson:"_id"`
@@ -53,8 +53,8 @@ type Invoice struct {
 	CreatedAt          time.Time `json:"created_at"`
 	ExpiresAt          time.Time `json:"expires_at"`
 	Discount           string    `json:"discount"`
-	ShippingFees       uint64    `json:"shippingFees"`
-	PaymentTerms       string    `json:"paymentTerms"`
+	ShippingFees       uint64    `json:"shipping_fees"`
+	PaymentTerms       string    `json:"payment_terms"`
 }
 
 type Sale struct {
@@ -67,7 +67,7 @@ type Sale struct {
 	CreatedAt          time.Time `json:"created_at"`
 	ExpiresAt          time.Time `json:"expires_at"`
 	Discount           string    `json:"discount"`
-	ShippingFees       uint64    `json:"shippingFees"`
+	ShippingFees       uint64    `json:"shipping_fees"`
 }
 type Payment struct {
 	ID          string    `bson:"_id"`
@@ -75,33 +75,33 @@ type Payment struct {
 	InvoiceId   string    `json:"invoice_id"`
 	CreatedAt   time.Time `json:"created_at"`
 	Amount      uint64    `json:"amount"`
-	PaymentMode string    `json:"paymentMode"`
+	PaymentMode string    `json:"payment_mode"`
 }
 type Expense struct {
 	ID          string    `bson:"_id"`
 	UserId      string    `bson:"user_id"`
-	ExpenseDate time.Time `json:"expenseDate"`
-	ExpenseName string    `json:"expenseName"`
-	PaymentMode string    `json:"paymentMode"`
+	ExpenseDate time.Time `json:"expense_date"`
+	ExpenseName string    `json:"expense_name"`
+	PaymentMode string    `json:"payment_mode"`
 	Note        string    `json:"note"`
 }
 type Category struct {
 	ID           string `bson:"_id"`
 	UserId       string `bson:"user_id"`
-	CategoryName string `json:"categoryName"`
+	CategoryName string `json:"category_name"`
 }
 type Item struct {
 	ID              string `bson:"_id"`
 	UserId          string `bson:"user_id"`
-	ItemName        string `json:"itemName"`
-	ItemPrice       uint64 `json:"itemPrice"`
-	ItemDescription string `json:"itemDescription"`
+	ItemName        string `json:"item_name"`
+	ItemPrice       uint64 `json:"item_price"`
+	ItemDescription string `json:"item_description"`
 }
 type Tax struct {
 	ID      string `bson:"_id"`
 	UserId  string `bson:"user_id"`
-	TaxName string `json:"taxName"`
-	TaxRate int    `json:"taxRate"`
+	TaxName string `json:"tax_name"`
+	TaxRate int    `json:"tax_rate"`
 }
 type Notification struct {
 	ID               string    `bson:"_id"`
