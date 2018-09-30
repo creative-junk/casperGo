@@ -2,77 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b2bd837-33fe-4a4d-b2ae-23cbff4b183f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/vendor/api/controller.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/api/model.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/api/repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/api/router.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/context/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/context/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/context/context.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/context/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/canonical.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/compress.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/cors.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/handlers.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/handlers_go18.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/handlers_pre18.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/logging.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/proxy_headers.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/recovery.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/ISSUE_TEMPLATE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/context_gorilla.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/context_native.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/middleware.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/mux.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/regexp.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/route.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/test_helpers.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/auth.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/bson.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/decimal.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/decode.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/encode.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/json.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bulk.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/cluster.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/gridfs.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/decode.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/encode.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/extension.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/fold.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/indent.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/scanner.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/stream.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/tags.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sasl.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sasl.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sasl_windows.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sasl_windows.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sasl_windows.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sspi_windows.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sspi_windows.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/scram/scram.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/log.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/queue.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/raceoff.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/raceon.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/saslimpl.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/saslstub.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/server.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/session.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/socket.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/stats.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vendor.json" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,13 +28,13 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="Procfile" value="1" />
-          <entry key="go" value="7" />
+          <entry key="go" value="8" />
           <entry key="json" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="7" />
+          <entry key="Go" value="8" />
           <entry key="JSON" value="1" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
@@ -107,13 +42,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Procfile" value="19" />
-          <entry key="go" value="12670" />
+          <entry key="go" value="12698" />
           <entry key="txt" value="35" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="12670" />
+          <entry key="Go" value="12698" />
           <entry key="PLAIN_TEXT" value="54" />
         </counts>
       </usages-collector>
@@ -127,64 +62,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/api/controller.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="918">
-              <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
-              <folding>
-                <element signature="e#49#114#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/model.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="69" column="54" selection-start-line="69" selection-start-column="54" selection-end-line="69" selection-end-column="54" />
-              <folding>
-                <element signature="e#29#71#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Procfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="11" selection-start-column="11" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/repository.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6784">
-              <caret line="475" column="13" selection-start-line="475" selection-start-column="13" selection-end-line="475" selection-end-column="13" />
-              <folding>
-                <element signature="e#43#72#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
-              <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/router.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3977">
-              <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+              <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -203,6 +84,7 @@
         <option value="$PROJECT_DIR$/api/model.go" />
         <option value="$PROJECT_DIR$/api/controller.go" />
         <option value="$PROJECT_DIR$/Procfile" />
+        <option value="$PROJECT_DIR$/controller.go" />
         <option value="$PROJECT_DIR$/main.go" />
       </list>
     </option>
@@ -236,7 +118,7 @@
             <path>
               <item name="casper" type="b2602c69:ProjectViewProjectNode" />
               <item name="casper" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="vendor" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -252,6 +134,13 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Maxx\go\src\casper\vendor" />
+      <recent name="C:\Users\Maxx\go\src\casper\api" />
+      <recent name="C:\Users\Maxx\go\src\casper" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -266,6 +155,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13691376" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -306,24 +196,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/repository.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6784">
-          <caret line="475" column="13" selection-start-line="475" selection-start-column="13" selection-end-line="475" selection-end-column="13" />
-          <folding>
-            <element signature="e#43#72#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/router.go">
+    <entry file="file://$PROJECT_DIR$/vendor/api/router.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3977">
           <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/model.go">
+    <entry file="file://$PROJECT_DIR$/vendor/api/model.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="69" column="54" selection-start-line="69" selection-start-column="54" selection-end-line="69" selection-end-column="54" />
@@ -343,20 +223,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/controller.go">
+    <entry file="file://$PROJECT_DIR$/vendor/api/controller.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="918">
           <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
           <folding>
             <element signature="e#49#114#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/api/repository.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8075">
+          <caret line="475" column="13" selection-start-line="475" selection-start-column="13" selection-end-line="475" selection-end-column="13" />
+          <folding>
+            <element signature="e#43#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
         </state>
       </provider>
     </entry>
