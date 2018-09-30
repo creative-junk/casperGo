@@ -40,7 +40,6 @@ func (c *Controller) NewBusiness(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	println(business)
 	success := c.repository.setupBusiness(business) //Add Business to Database
 
 	if !success {
