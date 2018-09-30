@@ -10,7 +10,7 @@ import (
 type Repository struct {
 }
 
-const DB_SERVER = "localhost:27017"
+const DB_SERVER = "mongodb://hernandez:gKZa7YS7xn444wfR@ds011820.mlab.com:11820/heroku_mg3t2zhk"
 const DB_NAME = "casper"
 const INVOICE_COLLECTION = "invoice"
 const CUSTOMER_COLLECTION = "customer"
