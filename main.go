@@ -1,11 +1,11 @@
 package main
 
 import (
-	"casper/api"
+	"github.com/creative-junk/casperv1/api"
+	"github.com/gorilla/handlers"
 	"log"
 	"net/http"
 	"os"
-	"github.com/gorilla/handlers"
 )
 
 func main() {

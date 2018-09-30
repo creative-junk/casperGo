@@ -3,6 +3,20 @@
 	"ignore": "test",
 	"package": [
 		{
+			"path": "api",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "GRq2ifQy/dBpq4wRwIBM8OGcQac=",
+			"path": "casper",
+			"revision": "9f6a7dc51559755432246b66a245777ee00347d0",
+			"revisionTime": "2018-09-30T13:22:04Z"
+		},
+		{
+			"path": "casper/api",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "IkPM2QLv9urri7S49wzroQx9oXA=",
 			"path": "github.com/gorilla/context",
 			"revision": "08b5f424b9271eedf6f9f0ce86cb9396ed337a42",
