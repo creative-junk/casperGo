@@ -1,0 +1,45 @@
+{
+	"ImportPath": "casper",
+	"GoVersion": "go1.10",
+	"GodepVersion": "v80",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/gorilla/handlers",
+			"Comment": "v1.4.0",
+			"Rev": "7e0847f9db758cdebd26c149d0ae9d5d0b9c98ce"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.6.1-13-g4dbd923",
+			"Rev": "4dbd923b0c9e99ff63ad54b0e9705ff92d3cdb06"
+		},
+		{
+			"ImportPath": "gopkg.in/mgo.v2",
+			"Comment": "r2016.08.01-7-g9856a29",
+			"Rev": "9856a29383ce1c59f308dd1cf0363a79b5bef6b5"
+		},
+		{
+			"ImportPath": "gopkg.in/mgo.v2/bson",
+			"Comment": "r2016.08.01-7-g9856a29",
+			"Rev": "9856a29383ce1c59f308dd1cf0363a79b5bef6b5"
+		},
+		{
+			"ImportPath": "gopkg.in/mgo.v2/internal/json",
+			"Comment": "r2016.08.01-7-g9856a29",
+			"Rev": "9856a29383ce1c59f308dd1cf0363a79b5bef6b5"
+		},
+		{
+			"ImportPath": "gopkg.in/mgo.v2/internal/sasl",
+			"Comment": "r2016.08.01-7-g9856a29",
+			"Rev": "9856a29383ce1c59f308dd1cf0363a79b5bef6b5"
+		},
+		{
+			"ImportPath": "gopkg.in/mgo.v2/internal/scram",
+			"Comment": "r2016.08.01-7-g9856a29",
+			"Rev": "9856a29383ce1c59f308dd1cf0363a79b5bef6b5"
+		}
+	]
+}
