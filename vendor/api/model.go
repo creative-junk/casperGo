@@ -21,7 +21,7 @@ type Business struct {
 type Customer struct {
 	ID           bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	UserId       string `bson:"user_id"`
-	Business 	 Business `json:"business"`
+	Business 	 *Business `json:"business"`
 	CustomerName string `json:"customer_name"`
 	CompanyName  string `json:"company_name"`
 	MobileNumber string `json:"mobile_number"`
