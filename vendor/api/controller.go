@@ -21,50 +21,58 @@ func (c *Controller) NewBusiness(w http.ResponseWriter, r *http.Request) {
 	//read the body of the request
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 
+	//Handle the error
 	if err != nil {
 		log.Fatalln("Error Setting Up Business", err)
-		w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError) //500 Error
 		return
 	}
-
+	//Close the response body
 	if err := r.Body.Close(); err != nil {
 		log.Fatalln("Error Setting Up Business", err)
 	}
-
+	//Unmarshal the json into our Business Struct
 	if err := json.Unmarshal(body, &business); err != nil {
 		w.WriteHeader(422)
 		log.Println(err)
 		if err := json.NewEncoder(w).Encode(err); err != nil {
 			log.Fatalln("Error unmarshalling data", err)
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusInternalServerError) //500 Error
 			return
 		}
 	}
-	success := c.repository.setupBusiness(business) //Add Business to Database
+	//The unMarshal works, write the object to the DB
+	success := c.repository.setupBusiness(business)
 
+	//Handle the error
 	if !success {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	//Set headers and update the Response
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusCreated) // 201
 	return
 }
 
-// UpdateInvoice PUT
+// UpdateBusiness PUT
 func (c *Controller) ModifyBusiness(w http.ResponseWriter, r *http.Request) {
+	// Create a Struct
 	var business Business
+
+	//Read the request
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576)) // read the body of the request
+	//Handle Error
 	if err != nil {
 		log.Fatalln("Error Updating Business", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
+	//Close request body and handle any errors
 	if err := r.Body.Close(); err != nil {
 		log.Fatalln("Error Updating Business", err)
 	}
-
+	//Unmarshal the json
 	if err := json.Unmarshal(body, &business); err != nil {
 		// unmarshall body contents as a type Candidate
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -75,14 +83,14 @@ func (c *Controller) ModifyBusiness(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
+	//The Unmarshal works, update the DB
 	success := c.repository.updateBusiness(business) // updates the product in the DB
-
+	//Handle any errors
 	if !success {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
+	//Set up the response
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -91,8 +99,14 @@ func (c *Controller) ModifyBusiness(w http.ResponseWriter, r *http.Request) {
 
 //Invoices /invoices GET
 func (c *Controller) ListInvoice(w http.ResponseWriter, r *http.Request) {
+	//Get All Invoices from the DB
 	invoices := c.repository.getInvoices()
+
+	//Marshal them into JSON, ignore the error for now
+	//TODO Consider handling errors that occur here
 	data, _ := json.Marshal(invoices)
+
+	//Set up the Response
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -102,18 +116,21 @@ func (c *Controller) ListInvoice(w http.ResponseWriter, r *http.Request) {
 
 //NewInvoice POST
 func (c *Controller) AddInvoice(w http.ResponseWriter, r *http.Request) {
+	//Setup our Struct
 	var invoice Invoice
 	//Read the body of the request
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+	//Handle the errors
 	if err != nil {
 		log.Fatalln("Error Setting up Invoice: ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	//Close the request Body and handle any errors
 	if err := r.Body.Close(); err != nil {
 		log.Fatalln("Error Creating Invoice")
 	}
-
+	//Unmarshal the json into our Struct and handle errors
 	if err := json.Unmarshal(body, &invoice); err != nil {
 		w.WriteHeader(422)
 		log.Println(err)
@@ -122,32 +139,39 @@ func (c *Controller) AddInvoice(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		success := c.repository.addInvoice(invoice)
-
-		if !success {
+	}
+	//Unmarshalling worked so lets save to the DB
+	success := c.repository.addInvoice(invoice)
+	//Handle errors
+	if !success {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
-		}
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusCreated)
-		return
 	}
+	//Setup the response
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusCreated)
+	return
+
 }
 
 // UpdateInvoice PUT
 func (c *Controller) ModifyInvoice(w http.ResponseWriter, r *http.Request) {
+	//Setup a Struct
 	var invoice Invoice
+
+	//Read the request body
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576)) // read the body of the request
+	//Handle errors
 	if err != nil {
 		log.Fatalln("Error Updating Invoice", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
+	//Close the request body and handle errors
 	if err := r.Body.Close(); err != nil {
 		log.Fatalln("Error Updating Invoice", err)
 	}
-
+	//Unmarshal the JSON into our Struct
 	if err := json.Unmarshal(body, &invoice); err != nil {
 		// unmarshall body contents as a type Candidate
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -158,14 +182,14 @@ func (c *Controller) ModifyInvoice(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
+	//The Unmarshal worked so lets update the database
 	success := c.repository.modifyInvoice(invoice) // updates the product in the DB
-
+	//Handle errors
 	if !success {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
+	//Set the Response
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -174,13 +198,16 @@ func (c *Controller) ModifyInvoice(w http.ResponseWriter, r *http.Request) {
 
 //FetchInvoice GET
 func (c *Controller) FetchInvoice(w http.ResponseWriter, r *http.Request) {
+	//Process the URL variables from the Request
 	vars := mux.Vars(r)
-
+	//Grab the ID
 	id := vars["id"]
-
+	// Fetch the Invoice from the DB
 	invoice := c.repository.fetchInvoice(id)
+	//Marshal teh invoice to JSON
 	data, _ := json.Marshal(invoice)
 
+	//Set Response Headers and return the Invoice
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -190,9 +217,11 @@ func (c *Controller) FetchInvoice(w http.ResponseWriter, r *http.Request) {
 
 //Delete an Invoice
 func (c *Controller) DeleteInvoice(w http.ResponseWriter, r *http.Request) {
+	//Process variables from the Request
 	vars := mux.Vars(r)
+	//Grab the ID
 	id := vars["id"]
-
+	// Delete the Invoice and handle errors
 	if err := c.repository.deleteInvoice(id); err != "" {
 		if strings.Contains(err, "404") {
 			w.WriteHeader(http.StatusNotFound)
@@ -201,6 +230,7 @@ func (c *Controller) DeleteInvoice(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+	//Set the Response
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -210,8 +240,11 @@ func (c *Controller) DeleteInvoice(w http.ResponseWriter, r *http.Request) {
 
 //Customers /customers GET
 func (c *Controller) ListCustomer(w http.ResponseWriter, r *http.Request) {
+	//Get All Customers
 	customers := c.repository.getCustomers()
+	//Marshal then into JSON
 	data, _ := json.Marshal(customers)
+	//Send the Invoices back within the Response
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -221,9 +254,11 @@ func (c *Controller) ListCustomer(w http.ResponseWriter, r *http.Request) {
 
 //NewCustomer POST
 func (c *Controller) AddCustomer(w http.ResponseWriter, r *http.Request) {
+	//Set up a Customer Struct
 	var customer Customer
 	//read the body of the request
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+	//Handle Errors
 	if err != nil {
 		log.Fatalln("Error Setting Up Customer: ", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -252,7 +287,7 @@ func (c *Controller) AddCustomer(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusCreated)
 		return
-	
+
 }
 
 //FetchCustomer GET
@@ -361,6 +396,7 @@ func (c *Controller) AddEstimate(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	}
 		success := c.repository.AddEstimate(estimate)
 
 		if !success {
@@ -370,7 +406,7 @@ func (c *Controller) AddEstimate(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusCreated)
 		return
-	}
+
 }
 
 //FetchEstimate GET
@@ -479,6 +515,7 @@ func (c *Controller) AddExpense(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	}
 		success := c.repository.AddExpense(expense)
 
 		if !success {
@@ -598,6 +635,7 @@ func (c *Controller) AddSale(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	}
 		success := c.repository.addSale(sale)
 
 		if !success {
@@ -716,6 +754,7 @@ func (c *Controller) AddItem(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	}
 		success := c.repository.AddItem(item)
 
 		if !success {
@@ -834,6 +873,7 @@ func (c *Controller) AcceptPayment(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	}
 		success := c.repository.AddPayment(payment)
 
 		if !success {
@@ -843,7 +883,7 @@ func (c *Controller) AcceptPayment(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusCreated)
 		return
-	}
+
 }
 
 //FetchPayment GET
@@ -952,6 +992,7 @@ func (c *Controller) AddTax(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+	}
 		success := c.repository.AddTax(tax)
 
 		if !success {
