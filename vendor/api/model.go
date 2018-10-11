@@ -7,8 +7,8 @@ import (
 )
 
 type Business struct {
-	ID            bson.ObjectId `bson:"_id"`
-	UserId        bson.ObjectId `bson:"user_id"`
+	ID            bson.ObjectId `json:"id" bson:"_id,omitempty"`
+	UserId        string		`json:"user_id"`
 	BusinessName  string        `json:"business_name"`
 	BusinessEmail string        `json:"business_email"`
 	PhoneNumber   string        `json:"phone_number"`
@@ -19,8 +19,9 @@ type Business struct {
 	Currency      string        `json:"currency"`
 }
 type Customer struct {
-	ID           string `bson:"_id"`
+	ID           bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	UserId       string `bson:"user_id"`
+	Business 	 Business `json:"business"`
 	CustomerName string `json:"customer_name"`
 	CompanyName  string `json:"company_name"`
 	MobileNumber string `json:"mobile_number"`
@@ -32,8 +33,9 @@ type Customer struct {
 	Notes        string `json:"notes"`
 }
 type Estimate struct {
-	ID                 string    `bson:"_id"`
+	ID                 bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	UserId             string    `bson:"user_id"`
+	Business		   Business	  `json:"business"`
 	CustomerId         string    `json:"customer_id"`
 	ProjectDescription string    `json:"project_description"`
 	EstimateItems      []Item    `json:"estimate_items"`
@@ -44,8 +46,9 @@ type Estimate struct {
 	ShippingFees       uint64    `json:"shipping_fees"`
 }
 type Invoice struct {
-	ID                 string    `bson:"_id"`
+	ID                 bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	UserId             string    `bson:"user_id"`
+	Business		   Business	  `json:"business"`		
 	CustomerId         string    `json:"customer_id"`
 	ProjectDescription string    `json:"project_description"`
 	InvoiceId          string    `json:"invoice_id"`
@@ -58,8 +61,9 @@ type Invoice struct {
 }
 
 type Sale struct {
-	ID                 string    `bson:"_id"`
+	ID                 bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	UserId             string    `bson:"user_id"`
+	Business		   Business	  `json:"business"`		
 	CustomerId         string    `json:"customer_id"`
 	ProjectDescription string    `json:"project_description"`
 	SaleId             string    `json:"sale_id"`
@@ -70,42 +74,48 @@ type Sale struct {
 	ShippingFees       uint64    `json:"shipping_fees"`
 }
 type Payment struct {
-	ID          string    `bson:"_id"`
+	ID          bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	UserId      string    `bson:"user_id"`
+	Business	Business   `json:"business"`	
 	InvoiceId   string    `json:"invoice_id"`
 	CreatedAt   time.Time `json:"created_at"`
 	Amount      uint64    `json:"amount"`
 	PaymentMode string    `json:"payment_mode"`
 }
 type Expense struct {
-	ID          string    `bson:"_id"`
+	ID          bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	UserId      string    `bson:"user_id"`
+	Business	Business  `json:"business"`
 	ExpenseDate time.Time `json:"expense_date"`
 	ExpenseName string    `json:"expense_name"`
 	PaymentMode string    `json:"payment_mode"`
 	Note        string    `json:"note"`
 }
 type Category struct {
-	ID           string `bson:"_id"`
+	ID           bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	UserId       string `bson:"user_id"`
+	Business	 Business	`json:"business"`
 	CategoryName string `json:"category_name"`
 }
 type Item struct {
-	ID              string `bson:"_id"`
+	ID              bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	UserId          string `bson:"user_id"`
+	Business		Business `json:"business"`
 	ItemName        string `json:"item_name"`
 	ItemPrice       uint64 `json:"item_price"`
 	ItemDescription string `json:"item_description"`
 }
 type Tax struct {
-	ID      string `bson:"_id"`
+	ID      bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	UserId  string `bson:"user_id"`
+	Business Business `json:"business"`
 	TaxName string `json:"tax_name"`
 	TaxRate int    `json:"tax_rate"`
 }
 type Notification struct {
-	ID               string    `bson:"_id"`
+	ID               bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	UserId           string    `bson:"user_id"`
+	Business 		 Business 	`json:"business"`
 	Notification     string    `json:"notification"`
 	NotificationDate time.Time `json:"notification_date"`
 }
