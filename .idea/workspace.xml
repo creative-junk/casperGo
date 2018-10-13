@@ -1,85 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5b2bd837-33fe-4a4d-b2ae-23cbff4b183f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/casper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/casper.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Godeps/Godeps.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Godeps/Readme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/api/casper-invoicing-firebase-adminsdk-i4kdh-a96801f157.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/casper-invoicing-firebase-adminsdk-i4kdh-a96801f157.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/api/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/api/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/api/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/api/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/canonical.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/compress.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/cors.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/handlers.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/handlers_go18.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/handlers_pre18.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/logging.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/proxy_headers.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/handlers/recovery.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/ISSUE_TEMPLATE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/context_gorilla.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/context_native.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/middleware.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/mux.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/regexp.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/route.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gorilla/mux/test_helpers.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/auth.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/bson.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/decimal.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/decode.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/encode.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bson/json.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/bulk.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/cluster.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/gridfs.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/decode.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/encode.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/extension.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/fold.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/indent.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/scanner.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/stream.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/json/tags.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sasl.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sasl.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sasl_windows.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sasl_windows.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sasl_windows.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sspi_windows.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/sasl/sspi_windows.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/internal/scram/scram.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/log.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/queue.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/raceoff.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/raceon.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/saslimpl.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/saslstub.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/server.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/session.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/socket.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/gopkg.in/mgo.v2/stats.go" beforeDir="false" />
-    </list>
+    <list default="true" id="5b2bd837-33fe-4a4d-b2ae-23cbff4b183f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,11 +66,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/api/controller.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4233">
-              <caret line="261" selection-start-line="261" selection-end-line="261" />
+            <state relative-caret-position="425">
+              <caret line="43" column="29" lean-forward="true" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -189,11 +111,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
               <caret line="1" selection-start-line="1" selection-end-line="1" />
+              <folding>
+                <element signature="e#14#94#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -326,6 +251,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18532526" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -418,6 +344,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="152" column="13" selection-start-line="152" selection-start-column="13" selection-end-line="152" selection-end-column="13" />
+          <folding>
+            <element signature="e#29#71#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -439,13 +368,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret lean-forward="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/controller.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4233">
-          <caret line="261" selection-start-line="261" selection-end-line="261" />
         </state>
       </provider>
     </entry>
@@ -505,6 +427,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" selection-start-line="1" selection-end-line="1" />
+          <folding>
+            <element signature="e#14#94#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/controller.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="43" column="29" lean-forward="true" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
         </state>
       </provider>
     </entry>
