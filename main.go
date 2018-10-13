@@ -1,7 +1,7 @@
 package main
 
 import (
-	"api"
+	"casper/api"
 	"github.com/gorilla/handlers"
 	"log"
 	"net/http"
