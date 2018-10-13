@@ -26,7 +26,7 @@ var routes = Routes{
 		"SetupBusiness",
 		"POST",
 		"/v0/business/setup",
-		controller.NewBusiness,
+		Authenticate(controller.NewBusiness),
 	},
 	Route{
 		"UpdateBusiness",
@@ -51,7 +51,7 @@ var routes = Routes{
 		"NewCustomer",
 		"POST",
 		"/v0/customer/new",
-		controller.AddCustomer,
+		Authenticate(controller.AddCustomer),
 	},
 	Route{
 		"GetCustomer",

@@ -3,21 +3,76 @@ package api
 
 import (
 	"encoding/json"
+	"firebase.google.com/go"
+	gContext "github.com/gorilla/context"
 	"github.com/gorilla/mux"
+	"golang.org/x/net/context"
+	"google.golang.org/api/option"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
 )
+var user User
 
 type Controller struct {
 	repository Repository
 }
 
+func initializeApp() *firebase.App  {
+	opt := option.WithCredentialsFile("casper-invoicing-firebase-adminsdk-i4kdh-a96801f157.json")
+	app,err := firebase.NewApp(context.Background(),nil,opt)
+	if err != nil{
+		log.Fatalf("error initializing app: %v\n",err)
+	}
+	return app
+}
+
+func  getUserId(r *http.Request) string  {
+	//Get the User object from the Request
+	user := gContext.Get(r,"decoded").(User)
+	//Extract the ID and return it
+	return user.ID
+}
+func Authenticate(next http.HandlerFunc) http.HandlerFunc  {
+
+	return http.HandlerFunc(func(w http.ResponseWriter,r *http.Request) {
+		//Get Token from the Request headers
+			authorizationHeader := r.Header.Get("authorization")
+			if authorizationHeader !="" {
+				bearerToken := strings.Split(authorizationHeader,"")
+				if len(bearerToken)==2{
+					//Initialize SDK
+					app := initializeApp()
+					//Verify token
+					client, err := app.Auth(context.Background())
+					if err != nil {
+						log.Fatalf("error getting Auth client: %v\n", err)
+
+					}
+					token, err := client.VerifyIDToken(r.Context(),bearerToken[1])
+					if err != nil {
+						json.NewEncoder(w).Encode(Exception{Message:"Invalid Authentication Token"})
+					}
+					userId := token.UID
+					user.ID = userId
+					gContext.Set(r,"decoded",user)
+					next(w,r)
+
+				}
+			}else {
+				json.NewEncoder(w).Encode(Exception{Message:"An authorization Header is required"})
+			}
+
+	})
+}
 //NewBusiness POST
 func (c *Controller) NewBusiness(w http.ResponseWriter, r *http.Request) {
 	var business Business
+
+	business.UserId = getUserId(r)
+
 	//read the body of the request
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 
@@ -41,6 +96,7 @@ func (c *Controller) NewBusiness(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
 	//The unMarshal works, write the object to the DB
 	success := c.repository.setupBusiness(business)
 
@@ -287,7 +343,6 @@ func (c *Controller) AddCustomer(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusCreated)
 		return
-
 }
 
 //FetchCustomer GET
@@ -525,7 +580,7 @@ func (c *Controller) AddExpense(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusCreated)
 		return
-	}
+
 }
 
 //FetchExpense GET
@@ -645,7 +700,7 @@ func (c *Controller) AddSale(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusCreated)
 		return
-	}
+
 }
 
 // UpdateSale PUT
@@ -764,7 +819,7 @@ func (c *Controller) AddItem(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusCreated)
 		return
-	}
+
 }
 
 // UpdateItem PUT
@@ -1002,7 +1057,7 @@ func (c *Controller) AddTax(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusCreated)
 		return
-	}
+
 }
 
 //FetchTax GET
