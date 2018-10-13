@@ -42,7 +42,7 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc  {
 			authorizationHeader := r.Header.Get("authorization")
 			if authorizationHeader !="" {
 				bearerToken := strings.Split(authorizationHeader,"")
-				if len(bearerToken)==2{
+				if len(bearerToken)==2 {
 					//Initialize SDK
 					app := initializeApp()
 					//Verify token
@@ -51,15 +51,17 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc  {
 						log.Fatalf("error getting Auth client: %v\n", err)
 
 					}
-					token, err := client.VerifyIDToken(r.Context(),bearerToken[1])
+					token, err := client.VerifyIDToken(r.Context(), bearerToken[1])
 					if err != nil {
-						json.NewEncoder(w).Encode(Exception{Message:"Invalid Authentication Token"})
+						json.NewEncoder(w).Encode(Exception{Message: "Invalid Authentication Token"})
 					}
 					userId := token.UID
 					user.ID = userId
-					gContext.Set(r,"decoded",user)
-					next(w,r)
+					gContext.Set(r, "decoded", user)
+					next(w, r)
 
+				}else{
+					json.NewEncoder(w).Encode(Exception{Message:"Authorization Failed"})
 				}
 			}else {
 				json.NewEncoder(w).Encode(Exception{Message:"An authorization Header is required"})
