@@ -336,7 +336,10 @@ func (c *Controller) AddCustomer(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-		success := c.repository.addCustomer(customer)
+	//Update this users Id
+	customer.UserId=user.ID
+
+	success := c.repository.addCustomer(customer)
 
 		if !success {
 			w.WriteHeader(http.StatusInternalServerError)
