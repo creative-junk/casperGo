@@ -131,9 +131,8 @@ type Item struct {
 	UserId          string        `json:"user_id"`
 	Business        string        `json:"business_id"`
 	ItemName        string        `json:"item_name"`
-	ItemPrice       uint64        `json:"item_price"`
+	ItemPrice       string        `json:"item_price"`
 	ItemDescription string        `json:"item_description"`
-	Quantity        int           `json:"quantity"`
 }
 type Tax struct {
 	ID       bson.ObjectId `json:"id" bson:"_id,omitempty"`
