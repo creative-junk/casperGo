@@ -550,10 +550,12 @@ func (r Repository) getItems() Items {
 
 	c := session.DB(DB_NAME).C(ITEM_COLLECTION)
 	results := Items{}
-
-	if err := c.Find(nil).All(&results); err != nil {
+	//TODO Filter according to LoggedIn user
+	iter := c.Find(nil).Sort("").Limit(100).Iter()
+	if  err:= iter.All(&results);err != nil {
 		fmt.Println("Failed to write results:", err)
 	}
+
 	return results
 }
 

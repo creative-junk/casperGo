@@ -16,6 +16,8 @@ import (
 )
 var user User
 
+const bearer  = "Bearer"
+
 type Controller struct {
 	repository Repository
 }
@@ -39,10 +41,13 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc  {
 
 	return http.HandlerFunc(func(w http.ResponseWriter,r *http.Request) {
 		//Get Token from the Request headers
-			authorizationHeader := r.Header.Get("authorization")
+			authorizationHeader := r.Header.Get("Authorization")
+
 			if authorizationHeader !="" {
+
 				bearerToken := strings.Split(authorizationHeader,"")
 				if len(bearerToken)==2 {
+					
 					//Initialize SDK
 					app := initializeApp()
 					//Verify token
@@ -54,6 +59,8 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc  {
 					token, err := client.VerifyIDToken(r.Context(), bearerToken[1])
 					if err != nil {
 						json.NewEncoder(w).Encode(Exception{Message: "Invalid Authentication Token"})
+						w.WriteHeader(http.StatusUnauthorized)
+						w.Write([]byte("Invalid Token"))
 					}
 					userId := token.UID
 					user.ID = userId
