@@ -47,7 +47,6 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc  {
 
 				bearerToken := strings.Split(authorizationHeader,"")
 				if len(bearerToken)==2 {
-					
 					//Initialize SDK
 					app := initializeApp()
 					//Verify token
@@ -68,7 +67,7 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc  {
 					next(w, r)
 
 				}else{
-					json.NewEncoder(w).Encode(Exception{Message:authorizationHeader})
+					json.NewEncoder(w).Encode(Exception{Message:string(len(bearerToken))})
 					w.WriteHeader(http.StatusUnauthorized)
 					w.Write([]byte("Invalid Token"))
 				}
