@@ -43,13 +43,13 @@ func verifyIDToken(ctx context.Context, app *firebase.App, idToken string) (*aut
 	// [START verify_id_token_golang]
 	client, err := app.Auth(context.Background())
 	if err != nil {
-		log.Fatalf("error getting Auth client: %v\n", err)
+		log.Printf("error getting Auth client: %v\n", err)
 		return nil,err
 	}
 
 	token, err := client.VerifyIDToken(ctx, idToken)
 	if err != nil {
-		log.Fatalf("error verifying ID token: %v\n", err)
+		log.Printf("error verifying ID token: %v\n", err)
 		return nil,err
 	}
 
@@ -74,7 +74,7 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 				app := initializeApp()
 
 				token,err := verifyIDToken(r.Context(),app,reqToken)
-				if err !=nil{
+				if err != nil{
 					json.NewEncoder(w).Encode(Exception{Message: "Authorization Failed"})
 				}
 				//userId := token.UID
