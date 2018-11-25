@@ -71,7 +71,7 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc  {
 					json.NewEncoder(w).Encode(Exception{Message:"Authorization Failed"})
 				}
 			}else {
-				json.NewEncoder(w).Encode(Exception{Message:"An authorization Header is required"})
+				json.NewEncoder(w).Encode(Exception{Message:authorizationHeader})
 			}
 
 	})
