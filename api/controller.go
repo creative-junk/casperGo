@@ -68,7 +68,7 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 			reqToken := r.Header.Get("Authorization")
 			splitToken := strings.Split(reqToken, "Bearer")
 			reqToken = splitToken[1]
-
+			log.Printf(reqToken)
 			if len(reqToken) > 0 {
 				//Initialize SDK
 				app := initializeApp()

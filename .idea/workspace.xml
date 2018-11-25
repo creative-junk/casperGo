@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5b2bd837-33fe-4a4d-b2ae-23cbff4b183f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/api/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/controller.go" afterDir="false" />
-    </list>
+    <list default="true" id="5b2bd837-33fe-4a4d-b2ae-23cbff4b183f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +55,7 @@
           <entry key="Readme" value="2" />
           <entry key="go" value="35" />
           <entry key="html" value="1" />
-          <entry key="json" value="4" />
+          <entry key="json" value="5" />
           <entry key="md" value="1" />
           <entry key="vmoptions" value="1" />
         </counts>
@@ -66,7 +64,7 @@
         <counts>
           <entry key="Go" value="35" />
           <entry key="HTML" value="1" />
-          <entry key="JSON" value="4" />
+          <entry key="JSON" value="5" />
           <entry key="PLAIN_TEXT" value="5" />
         </counts>
       </usages-collector>
@@ -104,6 +102,11 @@
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/casper-invoicing-firebase-adminsdk-i4kdh-a96801f157.json">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -445,9 +448,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/casper-invoicing-firebase-adminsdk-i4kdh-a96801f157.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/google.golang.org/api/option/option.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
@@ -475,6 +475,9 @@
           <caret line="291" column="5" lean-forward="true" selection-start-line="291" selection-start-column="5" selection-end-line="291" selection-end-column="5" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/casper-invoicing-firebase-adminsdk-i4kdh-a96801f157.json">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/api/controller.go">
       <provider selected="true" editor-type-id="text-editor">
