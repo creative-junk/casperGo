@@ -66,7 +66,7 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 
 		if authorizationHeader != "" {
 			reqToken := r.Header.Get("Authorization")
-			splitToken := strings.Split(reqToken, "Bearer")
+			splitToken := strings.Split(reqToken, "Bearer ")
 			reqToken = splitToken[1]
 			log.Printf(reqToken)
 			if len(reqToken) > 0 {
