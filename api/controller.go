@@ -41,24 +41,24 @@ func getUserId(r *http.Request) string {
 }
 
 //Verify Token
-func verifyIDToken(ctx context.Context, app *firebase.App, idToken string) (*auth.Token,error) {
+func verifyIDToken(ctx context.Context, app *firebase.App, idToken string) (*auth.Token, error) {
 	// [START verify_id_token_golang]
 	client, err := app.Auth(context.Background())
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 	log.Printf("error getting Auth client: %v\n", err)
 
 	token, err := client.VerifyIDToken(ctx, idToken)
 	if err != nil {
 		log.Printf("error verifying ID token: %v\n", err)
-		return nil,err
+		return nil, err
 	}
 
 	log.Printf("Verified ID token: %v\n", token)
 	// [END verify_id_token_golang]
 
-	return token,nil
+	return token, nil
 }
 
 // Authentication Middleware
@@ -77,10 +77,10 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 				//Initialize SDK
 				app := initializeApp()
 
-				token,err := verifyIDToken(r.Context(),app,reqToken)
-				if err != nil{
+				token, err := verifyIDToken(r.Context(), app, reqToken)
+				if err != nil {
 					json.NewEncoder(w).Encode(Exception{Message: "Authorization Failed"})
-				}else {
+				} else {
 					//userId := token.UID
 					user.ID = token.UID
 					gContext.Set(r, "decoded", user)
@@ -93,7 +93,6 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 		} else {
 			json.NewEncoder(w).Encode(Exception{Message: "An authorization Header is required"})
 		}
-
 
 	})
 }
@@ -470,7 +469,7 @@ func (c *Controller) DeleteCustomer(w http.ResponseWriter, r *http.Request) {
 
 //Estimates /estimates GET
 func (c *Controller) ListEstimate(w http.ResponseWriter, r *http.Request) {
-	estimates := c.repository.getEstimates()
+	estimates := c.repository.getEstimates(user.ID)
 	data, _ := json.Marshal(estimates)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -595,7 +594,7 @@ func (c *Controller) DeleteEstimate(w http.ResponseWriter, r *http.Request) {
 
 //Expenses /expenses GET
 func (c *Controller) ListExpense(w http.ResponseWriter, r *http.Request) {
-	expenses := c.repository.getExpenses()
+	expenses := c.repository.getExpenses(user.ID)
 	data, _ := json.Marshal(expenses)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -722,7 +721,7 @@ func (c *Controller) DeleteExpense(w http.ResponseWriter, r *http.Request) {
 
 //Invoices /sales GET
 func (c *Controller) ListSale(w http.ResponseWriter, r *http.Request) {
-	sales := c.repository.getSales()
+	sales := c.repository.getSales(user.ID)
 	data, _ := json.Marshal(sales)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -850,7 +849,7 @@ func (c *Controller) DeleteSale(w http.ResponseWriter, r *http.Request) {
 
 //Items /items GET
 func (c *Controller) ListItem(w http.ResponseWriter, r *http.Request) {
-	items := c.repository.getItems()
+	items := c.repository.getItems(user.ID)
 	data, _ := json.Marshal(items)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
