@@ -4,6 +4,7 @@ package api
 import (
 	"encoding/json"
 	"firebase.google.com/go"
+	"firebase.google.com/go/auth"
 	gContext "github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"golang.org/x/net/context"
@@ -38,6 +39,23 @@ func getUserId(r *http.Request) string {
 	//Extract the ID and return it
 	return user.ID
 }
+func verifyIDToken(ctx context.Context, app *firebase.App, idToken string) *auth.Token {
+	// [START verify_id_token_golang]
+	client, err := app.Auth(context.Background())
+	if err != nil {
+		log.Fatalf("error getting Auth client: %v\n", err)
+	}
+
+	token, err := client.VerifyIDToken(ctx, idToken)
+	if err != nil {
+		log.Fatalf("error verifying ID token: %v\n", err)
+	}
+
+	log.Printf("Verified ID token: %v\n", token)
+	// [END verify_id_token_golang]
+
+	return token
+}
 func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -52,18 +70,11 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 			if len(reqToken) > 0 {
 				//Initialize SDK
 				app := initializeApp()
-				//Verify token
-				client, err := app.Auth(context.Background())
-				if err != nil {
-					log.Fatalf("error getting Auth client: %v\n", err)
+				
+				token := verifyIDToken(r.Context(),app,reqToken)
 
-				}
-				token, err := client.VerifyIDToken(r.Context(), reqToken)
-				if err != nil {
-					json.NewEncoder(w).Encode(Exception{Message: "Invalid Authentication Token"})
-				}
-				userId := token.UID
-				user.ID = userId
+				//userId := token.UID
+				user.ID = token.UID
 				gContext.Set(r, "decoded", user)
 				next(w, r)
 
