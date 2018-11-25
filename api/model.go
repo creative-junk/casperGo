@@ -35,7 +35,7 @@ type Customer struct {
 	PaymentTerms    string           `json:"payment_terms"`
 	Notes           []Note           `json:"notes"`
 	Attachments     []Attachment     `json:"attachment"`
-	CreatedAt       time.Time     `json:"created_at"`
+	CreatedAt       time.Time        `json:"created_at"`
 	OpenInvoices    string           `json:"open_invoices" bson:"-"`
 	OverdueInvoices string           `json:"overdue_invoices" bson:"-"`
 	OpenEstimates   string           `json:"open_estimates" bson:"-"`
@@ -57,8 +57,7 @@ type Estimate struct {
 	EstimateTotal      string        `json:"estimate_total"`
 	EstimateStatus     string        `json:"estimate_status"`
 	Notes              []Note        `json:"notes"`
-	Attachments     []Attachment     `json:"attachment"`
-
+	Attachments        []Attachment  `json:"attachment"`
 }
 type Invoice struct {
 	ID                 bson.ObjectId `json:"id" bson:"_id,omitempty"`
@@ -76,8 +75,7 @@ type Invoice struct {
 	InvoiceTotal       string        `json:"invoice_total"`
 	InvoiceStatus      string        `json:"invoice_status"`
 	Notes              []Note        `json:"notes"`
-	Attachments     []Attachment     `json:"attachment"`
-
+	Attachments        []Attachment  `json:"attachment"`
 }
 
 type Sale struct {
@@ -94,8 +92,7 @@ type Sale struct {
 	ShippingFees       string        `json:"shipping_fees"`
 	SaleTotal          string        `json:"sale_total"`
 	Notes              []Note        `json:"notes"`
-	Attachments     []Attachment     `json:"attachment"`
-
+	Attachments        []Attachment  `json:"attachment"`
 }
 type Payment struct {
 	ID          bson.ObjectId `json:"id" bson:"_id,omitempty"`
@@ -106,8 +103,7 @@ type Payment struct {
 	Amount      string        `json:"amount"`
 	PaymentMode string        `json:"payment_mode"`
 	Notes       []Note        `json:"notes"`
-	Attachments     []Attachment     `json:"attachment"`
-
+	Attachments []Attachment  `json:"attachment"`
 }
 type Expense struct {
 	ID          bson.ObjectId `json:"id" bson:"_id,omitempty"`
@@ -117,8 +113,7 @@ type Expense struct {
 	ExpenseName string        `json:"expense_name"`
 	PaymentMode string        `json:"payment_mode"`
 	Notes       []Note        `json:"notes"`
-	Attachments []Attachment     `json:"attachment"`
-
+	Attachments []Attachment  `json:"attachment"`
 }
 type Category struct {
 	ID           bson.ObjectId `json:"id" bson:"_id,omitempty"`

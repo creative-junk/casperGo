@@ -14,71 +14,73 @@ import (
 	"net/http"
 	"strings"
 )
+
 var user User
 
-const bearer  = "Bearer"
+const bearer = "Bearer"
 
 type Controller struct {
 	repository Repository
 }
 
-func initializeApp() *firebase.App  {
+func initializeApp() *firebase.App {
 	opt := option.WithCredentialsFile("casper-invoicing-firebase-adminsdk-i4kdh-a96801f157.json")
-	app,err := firebase.NewApp(context.Background(),nil,opt)
-	if err != nil{
-		log.Fatalf("error initializing app: %v\n",err)
+	app, err := firebase.NewApp(context.Background(), nil, opt)
+	if err != nil {
+		log.Fatalf("error initializing app: %v\n", err)
 	}
 	return app
 }
 
-func  getUserId(r *http.Request) string  {
+func getUserId(r *http.Request) string {
 	//Get the User object from the Request
-	user := gContext.Get(r,"decoded").(User)
+	user := gContext.Get(r, "decoded").(User)
 	//Extract the ID and return it
 	return user.ID
 }
-func Authenticate(next http.HandlerFunc) http.HandlerFunc  {
+func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 
-	return http.HandlerFunc(func(w http.ResponseWriter,r *http.Request) {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		//Get Token from the Request headers
-			authorizationHeader := r.Header.Get("Authorization")
+		authorizationHeader := r.Header.Get("Authorization")
 
-			if authorizationHeader !="" {
-				reqToken := r.Header.Get("Authorization")
-				splitToken := strings.Split(reqToken, "Bearer")
-				reqToken = splitToken[1]
+		if authorizationHeader != "" {
+			reqToken := r.Header.Get("Authorization")
+			splitToken := strings.Split(reqToken, "Bearer")
+			reqToken = splitToken[1]
 
-				if len(reqToken) > 0 {
-					//Initialize SDK
-					app := initializeApp()
-					//Verify token
-					client, err := app.Auth(context.Background())
-					if err != nil {
-						log.Fatalf("error getting Auth client: %v\n", err)
+			if len(reqToken) > 0 {
+				//Initialize SDK
+				app := initializeApp()
+				//Verify token
+				client, err := app.Auth(context.Background())
+				if err != nil {
+					log.Fatalf("error getting Auth client: %v\n", err)
 
-					}
-					token, err := client.VerifyIDToken(r.Context(), reqToken)
-					if err != nil {
-						json.NewEncoder(w).Encode(Exception{Message: "Invalid Authentication Token"})
-						w.WriteHeader(http.StatusUnauthorized)
-						w.Write([]byte("Invalid Token"))
-					}
-					userId := token.UID
-					user.ID = userId
-					gContext.Set(r, "decoded", user)
-					next(w, r)
-
-				}else{
-					json.NewEncoder(w).Encode(Exception{Message:reqToken})
+				}
+				token, err := client.VerifyIDToken(r.Context(), reqToken)
+				if err != nil {
+					json.NewEncoder(w).Encode(Exception{Message: "Invalid Authentication Token"})
 					w.WriteHeader(http.StatusUnauthorized)
 					w.Write([]byte("Invalid Token"))
 				}
-			}else {
-				json.NewEncoder(w).Encode(Exception{Message:"An authorization Header is required"})
+				userId := token.UID
+				user.ID = userId
+				gContext.Set(r, "decoded", user)
+				next(w, r)
+
+			} else {
+				json.NewEncoder(w).Encode(Exception{Message: reqToken})
+				w.WriteHeader(http.StatusUnauthorized)
+				w.Write([]byte("Invalid Token"))
 			}
+		} else {
+			json.NewEncoder(w).Encode(Exception{Message: "An authorization Header is required"})
+		}
 
 	})
 }
+
 //NewBusiness POST
 func (c *Controller) NewBusiness(w http.ResponseWriter, r *http.Request) {
 	var business Business
@@ -212,8 +214,8 @@ func (c *Controller) AddInvoice(w http.ResponseWriter, r *http.Request) {
 	success := c.repository.addInvoice(invoice)
 	//Handle errors
 	if !success {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 	//Setup the response
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -347,17 +349,17 @@ func (c *Controller) AddCustomer(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	//Update this users Id
-	customer.UserId=user.ID
+	customer.UserId = user.ID
 
 	success := c.repository.addCustomer(customer)
 
-		if !success {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusCreated)
+	if !success {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
+	}
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusCreated)
+	return
 }
 
 //FetchCustomer GET
@@ -467,15 +469,15 @@ func (c *Controller) AddEstimate(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-		success := c.repository.AddEstimate(estimate)
+	success := c.repository.AddEstimate(estimate)
 
-		if !success {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusCreated)
+	if !success {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
+	}
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusCreated)
+	return
 
 }
 
@@ -586,15 +588,15 @@ func (c *Controller) AddExpense(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-		success := c.repository.AddExpense(expense)
+	success := c.repository.AddExpense(expense)
 
-		if !success {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusCreated)
+	if !success {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
+	}
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusCreated)
+	return
 
 }
 
@@ -706,15 +708,15 @@ func (c *Controller) AddSale(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-		success := c.repository.addSale(sale)
+	success := c.repository.addSale(sale)
 
-		if !success {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusCreated)
+	if !success {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
+	}
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusCreated)
+	return
 
 }
 
@@ -825,15 +827,15 @@ func (c *Controller) AddItem(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-		success := c.repository.AddItem(item)
+	success := c.repository.AddItem(item)
 
-		if !success {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusCreated)
+	if !success {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
+	}
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusCreated)
+	return
 
 }
 
@@ -944,15 +946,15 @@ func (c *Controller) AcceptPayment(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-		success := c.repository.AddPayment(payment)
+	success := c.repository.AddPayment(payment)
 
-		if !success {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusCreated)
+	if !success {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
+	}
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusCreated)
+	return
 
 }
 
@@ -1063,15 +1065,15 @@ func (c *Controller) AddTax(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-		success := c.repository.AddTax(tax)
+	success := c.repository.AddTax(tax)
 
-		if !success {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusCreated)
+	if !success {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
+	}
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusCreated)
+	return
 
 }
 

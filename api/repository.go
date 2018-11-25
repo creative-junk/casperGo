@@ -377,7 +377,6 @@ func (r Repository) deleteSale(id string) string {
 	return "OK"
 }
 
-
 //Get All Expenses
 func (r Repository) getExpenses() Expenses {
 	session, err := mgo.Dial(DB_SERVER)
@@ -552,7 +551,7 @@ func (r Repository) getItems() Items {
 	results := Items{}
 	//TODO Filter according to LoggedIn user
 	iter := c.Find(nil).Sort("").Limit(100).Iter()
-	if  err:= iter.All(&results);err != nil {
+	if err := iter.All(&results); err != nil {
 		fmt.Println("Failed to write results:", err)
 	}
 
