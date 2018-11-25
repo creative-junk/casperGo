@@ -76,11 +76,12 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 				token,err := verifyIDToken(r.Context(),app,reqToken)
 				if err != nil{
 					json.NewEncoder(w).Encode(Exception{Message: "Authorization Failed"})
+				}else {
+					//userId := token.UID
+					user.ID = token.UID
+					gContext.Set(r, "decoded", user)
+					next(w, r)
 				}
-				//userId := token.UID
-				user.ID = token.UID
-				gContext.Set(r, "decoded", user)
-				next(w, r)
 
 			} else {
 				json.NewEncoder(w).Encode(Exception{Message: "Invalid Token"})
@@ -88,6 +89,7 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 		} else {
 			json.NewEncoder(w).Encode(Exception{Message: "An authorization Header is required"})
 		}
+
 
 	})
 }

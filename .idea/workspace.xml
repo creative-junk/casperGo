@@ -55,7 +55,7 @@
         <counts>
           <entry key="Procfile" value="1" />
           <entry key="Readme" value="2" />
-          <entry key="go" value="34" />
+          <entry key="go" value="35" />
           <entry key="html" value="1" />
           <entry key="json" value="4" />
           <entry key="md" value="1" />
@@ -64,7 +64,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="34" />
+          <entry key="Go" value="35" />
           <entry key="HTML" value="1" />
           <entry key="JSON" value="4" />
           <entry key="PLAIN_TEXT" value="5" />
@@ -73,14 +73,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Procfile" value="19" />
-          <entry key="go" value="19171" />
+          <entry key="go" value="19196" />
           <entry key="json" value="2" />
           <entry key="txt" value="35" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="19171" />
+          <entry key="Go" value="19196" />
           <entry key="JSON" value="2" />
           <entry key="PLAIN_TEXT" value="54" />
         </counts>
@@ -98,10 +98,19 @@
         <entry file="file://$PROJECT_DIR$/api/controller.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="328">
-              <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
+              <caret line="82" column="30" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
               <folding>
                 <element signature="e#49#276#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://C:/Go/src/log/log.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="291" column="5" lean-forward="true" selection-start-line="291" selection-start-column="5" selection-end-line="291" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -460,10 +469,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://C:/Go/src/log/log.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="291" column="5" lean-forward="true" selection-start-line="291" selection-start-column="5" selection-end-line="291" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/api/controller.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="328">
-          <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
+          <caret line="82" column="30" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
           <folding>
             <element signature="e#49#276#0" expanded="true" />
           </folding>
