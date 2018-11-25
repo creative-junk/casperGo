@@ -39,13 +39,15 @@ func getUserId(r *http.Request) string {
 	//Extract the ID and return it
 	return user.ID
 }
+
+//Verify Token
 func verifyIDToken(ctx context.Context, app *firebase.App, idToken string) (*auth.Token,error) {
 	// [START verify_id_token_golang]
 	client, err := app.Auth(context.Background())
 	if err != nil {
-		log.Printf("error getting Auth client: %v\n", err)
 		return nil,err
 	}
+	log.Printf("error getting Auth client: %v\n", err)
 
 	token, err := client.VerifyIDToken(ctx, idToken)
 	if err != nil {
@@ -58,6 +60,8 @@ func verifyIDToken(ctx context.Context, app *firebase.App, idToken string) (*aut
 
 	return token,nil
 }
+
+// Authentication Middleware
 func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -98,8 +102,6 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc {
 func (c *Controller) NewBusiness(w http.ResponseWriter, r *http.Request) {
 	var business Business
 
-	business.UserId = getUserId(r)
-
 	//read the body of the request
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 
@@ -123,6 +125,9 @@ func (c *Controller) NewBusiness(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	//Update this users Id
+	business.UserId = user.ID
 
 	//The unMarshal works, write the object to the DB
 	success := c.repository.setupBusiness(business)
@@ -166,12 +171,15 @@ func (c *Controller) ModifyBusiness(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	//The Unmarshal works, update the DB
-	success := c.repository.updateBusiness(business) // updates the product in the DB
-	//Handle any errors
-	if !success {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+
+	if business.UserId == user.ID {
+		//The Unmarshal works, update the DB
+		success := c.repository.updateBusiness(business) // updates the product in the DB
+		//Handle any errors
+		if !success {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 	//Set up the response
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -182,8 +190,9 @@ func (c *Controller) ModifyBusiness(w http.ResponseWriter, r *http.Request) {
 
 //Invoices /invoices GET
 func (c *Controller) ListInvoice(w http.ResponseWriter, r *http.Request) {
+
 	//Get All Invoices from the DB
-	invoices := c.repository.getInvoices()
+	invoices := c.repository.getInvoices(user.ID)
 
 	//Marshal them into JSON, ignore the error for now
 	//TODO Consider handling errors that occur here
@@ -201,6 +210,7 @@ func (c *Controller) ListInvoice(w http.ResponseWriter, r *http.Request) {
 func (c *Controller) AddInvoice(w http.ResponseWriter, r *http.Request) {
 	//Setup our Struct
 	var invoice Invoice
+
 	//Read the body of the request
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	//Handle the errors
@@ -223,6 +233,10 @@ func (c *Controller) AddInvoice(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	//Update this users Id
+	invoice.UserId = user.ID
+
 	//Unmarshalling worked so lets save to the DB
 	success := c.repository.addInvoice(invoice)
 	//Handle errors
@@ -265,12 +279,15 @@ func (c *Controller) ModifyInvoice(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	//The Unmarshal worked so lets update the database
-	success := c.repository.modifyInvoice(invoice) // updates the product in the DB
-	//Handle errors
-	if !success {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+
+	if invoice.UserId == user.ID {
+		//The Unmarshal worked so lets update the database
+		success := c.repository.modifyInvoice(invoice) // updates the product in the DB
+		//Handle errors
+		if !success {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 	//Set the Response
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -324,7 +341,7 @@ func (c *Controller) DeleteInvoice(w http.ResponseWriter, r *http.Request) {
 //Customers /customers GET
 func (c *Controller) ListCustomer(w http.ResponseWriter, r *http.Request) {
 	//Get All Customers
-	customers := c.repository.getCustomers()
+	customers := c.repository.getCustomers(user.ID)
 	//Marshal then into JSON
 	data, _ := json.Marshal(customers)
 	//Send the Invoices back within the Response
@@ -394,7 +411,9 @@ func (c *Controller) FetchCustomer(w http.ResponseWriter, r *http.Request) {
 // ModifyCustomer PUT
 func (c *Controller) ModifyCustomer(w http.ResponseWriter, r *http.Request) {
 	var customer Customer
+
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576)) // read the body of the request
+
 	if err != nil {
 		log.Fatalln("Error Updating Customer", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -416,13 +435,13 @@ func (c *Controller) ModifyCustomer(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	success := c.repository.modifyCustomer(customer) // updates the product in the DB
-
-	if !success {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+	if customer.UserId == user.ID {
+		success := c.repository.modifyCustomer(customer) // updates the product in the DB
+		if !success {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -482,6 +501,10 @@ func (c *Controller) AddEstimate(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	//Update this users Id
+	estimate.UserId = user.ID
+
 	success := c.repository.AddEstimate(estimate)
 
 	if !success {
@@ -513,7 +536,9 @@ func (c *Controller) FetchEstimate(w http.ResponseWriter, r *http.Request) {
 // UpdateEstimate PUT
 func (c *Controller) ModifyEstimate(w http.ResponseWriter, r *http.Request) {
 	var estimate Estimate
+
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576)) // read the body of the request
+
 	if err != nil {
 		log.Fatalln("Error Updating Estimate", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -535,13 +560,13 @@ func (c *Controller) ModifyEstimate(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	success := c.repository.modifyEstimate(estimate) // updates the product in the DB
-
-	if !success {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+	if estimate.UserId == user.ID {
+		success := c.repository.modifyEstimate(estimate) // updates the product in the DB
+		if !success {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -582,6 +607,7 @@ func (c *Controller) ListExpense(w http.ResponseWriter, r *http.Request) {
 //NewExpense POST
 func (c *Controller) AddExpense(w http.ResponseWriter, r *http.Request) {
 	var expense Expense
+
 	//read the body of the request
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
@@ -601,6 +627,10 @@ func (c *Controller) AddExpense(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	//Update this users Id
+	expense.UserId = user.ID
+
 	success := c.repository.AddExpense(expense)
 
 	if !success {
@@ -632,7 +662,9 @@ func (c *Controller) FetchExpense(w http.ResponseWriter, r *http.Request) {
 // UpdateExpense PUT
 func (c *Controller) ModifyExpense(w http.ResponseWriter, r *http.Request) {
 	var expense Expense
+
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576)) // read the body of the request
+
 	if err != nil {
 		log.Fatalln("Error Updating Expense", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -654,13 +686,14 @@ func (c *Controller) ModifyExpense(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	success := c.repository.modifyExpense(expense) // updates the product in the DB
+	if expense.UserId == user.ID {
+		success := c.repository.modifyExpense(expense) // updates the product in the DB
 
-	if !success {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		if !success {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -701,6 +734,7 @@ func (c *Controller) ListSale(w http.ResponseWriter, r *http.Request) {
 //NewSale POST
 func (c *Controller) AddSale(w http.ResponseWriter, r *http.Request) {
 	var sale Sale
+
 	//Read the body of the request
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
@@ -721,6 +755,10 @@ func (c *Controller) AddSale(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	//Update this users Id
+	sale.UserId = user.ID
+
 	success := c.repository.addSale(sale)
 
 	if !success {
@@ -736,7 +774,9 @@ func (c *Controller) AddSale(w http.ResponseWriter, r *http.Request) {
 // UpdateSale PUT
 func (c *Controller) ModifySale(w http.ResponseWriter, r *http.Request) {
 	var sale Sale
+
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576)) // read the body of the request
+
 	if err != nil {
 		log.Fatalln("Error Updating Sale", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -758,13 +798,14 @@ func (c *Controller) ModifySale(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	success := c.repository.modifySale(sale) // updates the product in the DB
+	if sale.UserId == user.ID {
+		success := c.repository.modifySale(sale) // updates the product in the DB
 
-	if !success {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		if !success {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -821,6 +862,7 @@ func (c *Controller) ListItem(w http.ResponseWriter, r *http.Request) {
 //NewItem POST
 func (c *Controller) AddItem(w http.ResponseWriter, r *http.Request) {
 	var item Item
+
 	//read the body of the request
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
@@ -840,6 +882,10 @@ func (c *Controller) AddItem(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	//Update this users Id
+	item.UserId = user.ID
+
 	success := c.repository.AddItem(item)
 
 	if !success {
@@ -855,6 +901,7 @@ func (c *Controller) AddItem(w http.ResponseWriter, r *http.Request) {
 // UpdateItem PUT
 func (c *Controller) ModifyItem(w http.ResponseWriter, r *http.Request) {
 	var item Item
+
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576)) // read the body of the request
 	if err != nil {
 		log.Fatalln("Error Updating Item", err)
@@ -877,13 +924,13 @@ func (c *Controller) ModifyItem(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	success := c.repository.modifyItem(item) // updates the product in the DB
-
-	if !success {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+	if item.UserId == user.ID {
+		success := c.repository.modifyItem(item) // updates the product in the DB
+		if !success {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -928,7 +975,7 @@ func (c *Controller) DeleteItem(w http.ResponseWriter, r *http.Request) {
 
 //Payments /payments GET
 func (c *Controller) ListPayment(w http.ResponseWriter, r *http.Request) {
-	invoices := c.repository.getInvoices()
+	invoices := c.repository.getInvoices(user.ID)
 	data, _ := json.Marshal(invoices)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -959,6 +1006,10 @@ func (c *Controller) AcceptPayment(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	//Update this users Id
+	payment.UserId = user.ID
+
 	success := c.repository.AddPayment(payment)
 
 	if !success {
@@ -990,7 +1041,9 @@ func (c *Controller) FetchPayment(w http.ResponseWriter, r *http.Request) {
 // UpdatePayment PUT
 func (c *Controller) ModifyPayment(w http.ResponseWriter, r *http.Request) {
 	var payment Payment
+
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576)) // read the body of the request
+
 	if err != nil {
 		log.Fatalln("Error Updating Payment", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -1012,13 +1065,13 @@ func (c *Controller) ModifyPayment(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	success := c.repository.modifyPayment(payment) // updates the product in the DB
-
-	if !success {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+	if payment.UserId == user.ID {
+		success := c.repository.modifyPayment(payment) // updates the product in the DB
+		if !success {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
@@ -1047,7 +1100,7 @@ func (c *Controller) DeletePayment(w http.ResponseWriter, r *http.Request) {
 
 //Items /taxes GET
 func (c *Controller) ListTax(w http.ResponseWriter, r *http.Request) {
-	taxes := c.repository.getTaxes()
+	taxes := c.repository.getTaxes(user.ID)
 	data, _ := json.Marshal(taxes)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -1059,6 +1112,7 @@ func (c *Controller) ListTax(w http.ResponseWriter, r *http.Request) {
 //NewTax POST
 func (c *Controller) AddTax(w http.ResponseWriter, r *http.Request) {
 	var tax Tax
+
 	//read the body of the request
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
@@ -1078,6 +1132,10 @@ func (c *Controller) AddTax(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	//Update this users Id
+	tax.UserId = user.ID
+
 	success := c.repository.AddTax(tax)
 
 	if !success {
@@ -1109,6 +1167,7 @@ func (c *Controller) FetchTax(w http.ResponseWriter, r *http.Request) {
 // UpdateTax PUT
 func (c *Controller) ModifyTax(w http.ResponseWriter, r *http.Request) {
 	var tax Tax
+
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576)) // read the body of the request
 	if err != nil {
 		log.Fatalln("Error Updating Tax", err)
@@ -1131,13 +1190,13 @@ func (c *Controller) ModifyTax(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	success := c.repository.modifyTax(tax) // updates the product in the DB
-
-	if !success {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+	if tax.UserId == user.ID {
+		success := c.repository.modifyTax(tax) // updates the product in the DB
+		if !success {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)

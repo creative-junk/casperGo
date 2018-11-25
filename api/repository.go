@@ -4,6 +4,7 @@ package api
 import (
 	"fmt"
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 	"log"
 )
 
@@ -54,7 +55,7 @@ func (r Repository) updateBusiness(business Business) bool {
 }
 
 //Get All Invoices
-func (r Repository) getInvoices() Invoices {
+func (r Repository) getInvoices(userId string) Invoices {
 	session, err := mgo.Dial(DB_SERVER)
 
 	if err != nil {
@@ -66,7 +67,7 @@ func (r Repository) getInvoices() Invoices {
 	c := session.DB(DB_NAME).C(INVOICE_COLLECTION)
 	results := Invoices{}
 
-	if err := c.Find(nil).All(&results); err != nil {
+	if err := c.Find(bson.M{"userId": userId}).All(&results); err != nil {
 		fmt.Println("Failed to write results:", err)
 	}
 
@@ -136,7 +137,7 @@ func (r Repository) deleteInvoice(id string) string {
 }
 
 //Get All Customers
-func (r Repository) getCustomers() Customers {
+func (r Repository) getCustomers(userId string) Customers {
 	session, err := mgo.Dial(DB_SERVER)
 
 	if err != nil {
@@ -148,7 +149,7 @@ func (r Repository) getCustomers() Customers {
 	c := session.DB(DB_NAME).C(CUSTOMER_COLLECTION)
 	results := Customers{}
 
-	if err := c.Find(nil).All(&results); err != nil {
+	if err := c.Find(bson.M{"userId": userId}).All(&results); err != nil {
 		fmt.Println("Failed to write results:", err)
 	}
 	return results
@@ -216,7 +217,7 @@ func (r Repository) deleteCustomer(id string) string {
 }
 
 //Get All Estimates
-func (r Repository) getEstimates() Estimates {
+func (r Repository) getEstimates(userId string) Estimates {
 	session, err := mgo.Dial(DB_SERVER)
 
 	if err != nil {
@@ -228,7 +229,7 @@ func (r Repository) getEstimates() Estimates {
 	c := session.DB(DB_NAME).C(ESTIMATE_COLLECTION)
 	results := Estimates{}
 
-	if err := c.Find(nil).All(&results); err != nil {
+	if err := c.Find(bson.M{"userId": userId}).All(&results); err != nil {
 		fmt.Println("Failed to write results:", err)
 	}
 	return results
@@ -296,7 +297,7 @@ func (r Repository) deleteEstimate(id string) string {
 }
 
 //Get All Sales Receipts
-func (r Repository) getSales() Sales {
+func (r Repository) getSales(userId string) Sales {
 	session, err := mgo.Dial(DB_SERVER)
 
 	if err != nil {
@@ -308,7 +309,7 @@ func (r Repository) getSales() Sales {
 	c := session.DB(DB_NAME).C(SALE_COLLECTION)
 	results := Sales{}
 
-	if err := c.Find(nil).All(&results); err != nil {
+	if err := c.Find(bson.M{"userId": userId}).All(&results); err != nil {
 		fmt.Println("Failed to write results:", err)
 	}
 
@@ -378,7 +379,7 @@ func (r Repository) deleteSale(id string) string {
 }
 
 //Get All Expenses
-func (r Repository) getExpenses() Expenses {
+func (r Repository) getExpenses(userId string) Expenses {
 	session, err := mgo.Dial(DB_SERVER)
 
 	if err != nil {
@@ -390,7 +391,7 @@ func (r Repository) getExpenses() Expenses {
 	c := session.DB(DB_NAME).C(EXPENSE_COLLECTION)
 	results := Expenses{}
 
-	if err := c.Find(nil).All(&results); err != nil {
+	if err := c.Find(bson.M{"userId": userId}).All(&results); err != nil {
 		fmt.Println("Failed to write results: ", err)
 	}
 	return results
@@ -458,7 +459,7 @@ func (r Repository) deleteExpense(id string) string {
 }
 
 //Get Payments
-func (r Repository) getPayments() Payments {
+func (r Repository) getPayments(userId string) Payments {
 	session, err := mgo.Dial(DB_SERVER)
 
 	if err != nil {
@@ -470,7 +471,7 @@ func (r Repository) getPayments() Payments {
 	c := session.DB(DB_NAME).C(PAYMENT_COLLECTION)
 	results := Payments{}
 
-	if err := c.Find(nil).All(&results); err != nil {
+	if err := c.Find(bson.M{"userId": userId}).All(&results); err != nil {
 		fmt.Println("Failed to write results:", err)
 	}
 	return results
@@ -538,7 +539,7 @@ func (r Repository) deletePayment(id string) string {
 }
 
 //Get Items
-func (r Repository) getItems() Items {
+func (r Repository) getItems(userId string) Items {
 	session, err := mgo.Dial(DB_SERVER)
 
 	if err != nil {
@@ -550,7 +551,7 @@ func (r Repository) getItems() Items {
 	c := session.DB(DB_NAME).C(ITEM_COLLECTION)
 	results := Items{}
 	//TODO Filter according to LoggedIn user
-	iter := c.Find(nil).Sort("").Limit(100).Iter()
+	iter := c.Find(bson.M{"userId": userId}).Sort("").Limit(100).Iter()
 	if err := iter.All(&results); err != nil {
 		fmt.Println("Failed to write results:", err)
 	}
@@ -620,7 +621,7 @@ func (r Repository) deleteItem(id string) string {
 }
 
 //Get Taxes
-func (r Repository) getTaxes() Taxes {
+func (r Repository) getTaxes(userId string) Taxes {
 	session, err := mgo.Dial(DB_SERVER)
 
 	if err != nil {
@@ -632,7 +633,7 @@ func (r Repository) getTaxes() Taxes {
 	c := session.DB(DB_NAME).C(TAX_COLLECTION)
 	results := Taxes{}
 
-	if err := c.Find(nil).All(&results); err != nil {
+	if err := c.Find(bson.M{"userId": userId}).All(&results); err != nil {
 		fmt.Println("Failed to write results: ", err)
 	}
 	return results
@@ -700,7 +701,7 @@ func (r Repository) deleteTax(id string) string {
 }
 
 //Get Notifications
-func (r Repository) getNotifications() Notifications {
+func (r Repository) getNotifications(userId string) Notifications {
 	session, err := mgo.Dial(DB_SERVER)
 
 	if err != nil {
@@ -712,7 +713,7 @@ func (r Repository) getNotifications() Notifications {
 	c := session.DB(DB_NAME).C(NOTIFICATION_COLLECTION)
 	results := Notifications{}
 
-	if err := c.Find(nil).All(&results); err != nil {
+	if err := c.Find(bson.M{"_id": userId}).All(&results); err != nil {
 		fmt.Println("Failed to write results: ", err)
 	}
 	return results
