@@ -68,10 +68,12 @@ func Authenticate(next http.HandlerFunc) http.HandlerFunc  {
 					next(w, r)
 
 				}else{
-					json.NewEncoder(w).Encode(Exception{Message:"Authorization Failed"})
+					json.NewEncoder(w).Encode(Exception{Message:authorizationHeader})
+					w.WriteHeader(http.StatusUnauthorized)
+					w.Write([]byte("Invalid Token"))
 				}
 			}else {
-				json.NewEncoder(w).Encode(Exception{Message:authorizationHeader})
+				json.NewEncoder(w).Encode(Exception{Message:"An authorization Header is required"})
 			}
 
 	})
